@@ -1,7 +1,7 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 
-ObjectType();
+@ObjectType()
 @Entity('users')
 export class User {
   @Field(() => ID)
@@ -17,13 +17,10 @@ export class User {
   name: string;
 
   @Field()
-  @Column()
+  @CreateDateColumn()
   createdAt: Date;
 
   @Field()
-  @Column()
+  @UpdateDateColumn()
   updatedAt: Date;
-
-  // @Field(() => Int, { description: 'Example field (placeholder)' })
-  // exampleField: number;
 }
