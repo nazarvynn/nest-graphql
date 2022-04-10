@@ -64,10 +64,9 @@ $ git push -u origin master
 ```
 
 ## Completed Tasks
-- [ ] Setup Nest app
-- [ ] Install TypeORM
-- [ ] Setup Postgres with Docker
-- [ ] Connect to Postgres
-- [ ] Create User entity
-- [ ] Create few migrations
-- [ ] GraphQL
+- [x] Setup Nest app
+- [x] Install TypeORM
+- [x] Setup Postgres with Docker
+- [x] Connect to Postgres
+- [x] Create User entity
+- [x] GraphQL
