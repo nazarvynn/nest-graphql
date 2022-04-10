@@ -1,22 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Apollo } from 'apollo-angular';
-import { map, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 
-import { GET_ALL_USERS } from './gql/get-all-users';
-
-interface User {
-  email: string;
-  name: string;
-}
-
-interface UserRecord {
-  id: string;
-  name: string;
-  email: string;
-  createdAt: string;
-  updatedAt: string;
-}
+import { UserService } from './user.service';
+import { User } from './models';
 
 @Component({
   selector: 'app-home',
@@ -26,11 +13,10 @@ interface UserRecord {
 export class HomeComponent implements OnInit {
   createUserForm!: FormGroup;
   editUserForm!: FormGroup;
-  // users!: UserRecord[];
-  users$?: Observable<UserRecord[]>;
+  users$?: Observable<User[]>;
   showEdit = false;
 
-  constructor(private apollo: Apollo) {}
+  constructor(private userService: UserService) {}
 
   ngOnInit(): void {
     this.initCreateUserForm();
@@ -46,35 +32,35 @@ export class HomeComponent implements OnInit {
   }
 
   queryUsers(): void {
-    this.users$ = this.apollo
-      .watchQuery<{ users: UserRecord[] }>({ query: GET_ALL_USERS })
-      .valueChanges.pipe(map(({ data }) => data.users));
+    this.users$ = this.userService.queryUsers();
   }
 
   createUser(): void {
     const userParams = this.createUserForm?.value;
-    console.log(userParams);
+    this.userService.createUser(userParams).subscribe();
   }
 
-  showUpdateUser(user: UserRecord): void {
+  showUpdateUser(user: User): void {
     this.showEdit = true;
     this.editUserForm.patchValue(user);
   }
 
   initUpdateUserForm(): void {
     this.editUserForm = new FormGroup({
+      id: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required]),
       name: new FormControl('', [Validators.required]),
     });
   }
 
   updateUser(): void {
-    const userParams = this.editUserForm?.value;
-    console.log('update', userParams);
-    // this.showEdit = false;
+    const { id, ...userParams } = this.editUserForm?.value;
+    this.userService.updateUser(+id, userParams).subscribe(() => {
+      this.showEdit = false;
+    });
   }
 
-  removeUser(user: UserRecord): void {
-    console.log('remove', user);
+  removeUser({ id }: User): void {
+    this.userService.removeUser(+id).subscribe();
   }
 }
