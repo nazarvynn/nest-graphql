@@ -6,11 +6,11 @@ import { UserService } from './user.service';
 import { User } from './models';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
+  selector: 'app-user',
+  templateUrl: './user.component.html',
+  styleUrls: ['./user.component.scss'],
 })
-export class HomeComponent implements OnInit {
+export class UserComponent implements OnInit {
   createUserForm!: FormGroup;
   editUserForm!: FormGroup;
   users$?: Observable<User[]>;
