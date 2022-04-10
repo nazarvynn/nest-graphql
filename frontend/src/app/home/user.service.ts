@@ -41,7 +41,13 @@ export class UserService {
         variables: {
           createUser: { ...userParams },
         },
-        refetchQueries: ['users'],
+        update: (cache, { data }) => {
+          const list = cache.readQuery<{ users: User[] }>({ query: USERS });
+          cache.writeQuery({
+            query: USERS,
+            data: { users: [...list!.users, data?.createUser] },
+          });
+        },
       })
       .pipe(map(({ data }) => data?.createUser));
   }
@@ -53,7 +59,13 @@ export class UserService {
         variables: {
           updateUser: { id, ...userParams },
         },
-        refetchQueries: ['user'],
+        update: (cache, { data }) => {
+          const user = cache.readQuery<{ user: User }>({ query: USER, variables: { id } });
+          cache.writeQuery({
+            query: USER,
+            data: { user: { ...user, ...data?.updateUser } },
+          });
+        },
       })
       .pipe(map(({ data }) => data?.updateUser));
   }
@@ -63,7 +75,11 @@ export class UserService {
       .mutate<{ removeUser: User }>({
         mutation: REMOVE_USER,
         variables: { id },
-        refetchQueries: ['users'],
+        update: (cache, { data }) => {
+          const normalizedId = cache.identify({ id, __typename: 'User' });
+          cache.evict({ id: normalizedId });
+          cache.gc();
+        },
       })
       .pipe(map(({ data }) => data?.removeUser));
   }
