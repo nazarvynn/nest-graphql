@@ -3,8 +3,7 @@ import { Apollo } from 'apollo-angular';
 import { map, Observable } from 'rxjs';
 
 import { CREATE_USER, REMOVE_USER, UPDATE_USER, USER, USERS } from './graphql';
-import { User } from './models';
-import { UserParams } from './models/user-params.model';
+import { User, UserParams } from './models';
 
 @Injectable({
   providedIn: 'root',
@@ -75,7 +74,7 @@ export class UserService {
       .mutate<{ removeUser: User }>({
         mutation: REMOVE_USER,
         variables: { id },
-        update: (cache, { data }) => {
+        update: (cache) => {
           const normalizedId = cache.identify({ id, __typename: 'User' });
           cache.evict({ id: normalizedId });
           cache.gc();
