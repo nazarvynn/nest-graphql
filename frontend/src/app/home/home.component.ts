@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Apollo } from 'apollo-angular';
+import { map, Observable } from 'rxjs';
+
+import { GET_ALL_USERS } from './gql/get-all-users';
 
 interface User {
   email: string;
@@ -22,15 +26,16 @@ interface UserRecord {
 export class HomeComponent implements OnInit {
   createUserForm!: FormGroup;
   editUserForm!: FormGroup;
-  users!: UserRecord[];
+  // users!: UserRecord[];
+  users$?: Observable<UserRecord[]>;
   showEdit = false;
 
-  constructor() {}
+  constructor(private apollo: Apollo) {}
 
   ngOnInit(): void {
     this.initCreateUserForm();
     this.initUpdateUserForm();
-    this.loadUsers();
+    this.queryUsers();
   }
 
   initCreateUserForm(): void {
@@ -40,42 +45,15 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  queryUsers(): void {
+    this.users$ = this.apollo
+      .watchQuery<{ users: UserRecord[] }>({ query: GET_ALL_USERS })
+      .valueChanges.pipe(map(({ data }) => data.users));
+  }
+
   createUser(): void {
     const userParams = this.createUserForm?.value;
     console.log(userParams);
-  }
-
-  loadUsers(): void {
-    this.users = [
-      {
-        id: '1',
-        name: 'user-1',
-        email: 'email-1',
-        createdAt: 'createdAt-1',
-        updatedAt: 'updatedAt-1',
-      },
-      {
-        id: '2',
-        name: 'user-2',
-        email: 'email-2',
-        createdAt: 'createdAt-2',
-        updatedAt: 'updatedAt-2',
-      },
-      {
-        id: '3',
-        name: 'user-3',
-        email: 'email-3',
-        createdAt: 'createdAt-3',
-        updatedAt: 'updatedAt-3',
-      },
-      {
-        id: '4',
-        name: 'user-4',
-        email: 'email-4',
-        createdAt: 'createdAt-4',
-        updatedAt: 'updatedAt-4',
-      },
-    ];
   }
 
   showUpdateUser(user: UserRecord): void {

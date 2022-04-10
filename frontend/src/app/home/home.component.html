@@ -22,8 +22,7 @@
       </div>
     </form>
   </div>
-  <div class="table-cnt">
-
+  <div *ngIf="users$ | async as users" class="table-cnt">
     <p-table [value]="users" responsiveLayout="scroll">
       <ng-template pTemplate="header">
         <tr>
@@ -40,8 +39,8 @@
           <td>{{user.id}}</td>
           <td>{{user.name}}</td>
           <td>{{user.email}}</td>
-          <td>{{user.createdAt}}</td>
-          <td>{{user.updatedAt}}</td>
+          <td>{{user.createdAt | date: 'dd.MM.yyyy HH:mm'}}</td>
+          <td>{{user.updatedAt | date: 'dd.MM.yyyy HH:mm'}}</td>
           <td>
             <button pButton type="button" class="p-button-outlined mr-3" icon="pi pi-pencil" (click)="showUpdateUser(user)"></button>
             <button pButton type="button" class="p-button-danger p-button-outlined" icon="pi pi-times-circle" (click)="removeUser(user)"></button>
