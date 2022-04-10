@@ -1,0 +1,39 @@
+@import 'vars';
+
+*,
+::after,
+::before {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+html {
+  height: 100%;
+
+  body {
+    @include text-default;
+    background: $white;
+    height: 100%;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+a {
+  color: $text;
+  cursor: pointer;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @include text-default;
+  -webkit-font-smoothing: antialiased;
+}

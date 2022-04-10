@@ -4,6 +4,7 @@
   "cli": {
     "packageManager": "yarn"
   },
+  "defaultProject": "frontend",
   "newProjectRoot": "projects",
   "projects": {
     "frontend": {
@@ -23,6 +24,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
             "outputPath": "dist/frontend",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -30,43 +32,79 @@
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "src/favicon.ico",
-              "src/assets"
+              "src/assets/favicon.ico",
+              {
+                "glob": "**/*",
+                "input": "src/assets",
+                "ignore": ["styles/**/*"],
+                "output": "assets"
+              }
             ],
             "styles": [
+              "node_modules/primeflex/primeflex.css",
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/primeng/resources/themes/saga-blue/theme.css",
+              "node_modules/primeng/resources/primeng.min.css",
               "src/styles.scss"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": ["src/assets/styles"]
+            },
             "scripts": []
           },
           "configurations": {
             "production": {
+              "aot": true,
+              "buildOptimizer": true,
+              "extractLicenses": true,
+              "namedChunks": false,
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "vendorChunk": true,
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "3mb",
+                  "maximumError": "5mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "6kb"
                 }
               ],
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
-                }
-              ],
-              "outputHashing": "all"
+              "fileReplacements": []
             },
             "development": {
-              "buildOptimizer": false,
-              "optimization": false,
+              "aot": true,
+              "buildOptimizer": true,
+              "extractLicenses": true,
+              "namedChunks": true,
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
               "vendorChunk": true,
-              "extractLicenses": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "3mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
+              "fileReplacements": []
+            },
+            "local": {
+              "aot": false,
+              "buildOptimizer": false,
+              "namedChunks": true,
+              "optimization": false,
               "sourceMap": true,
-              "namedChunks": true
+              "vendorChunk": true,
+              "fileReplacements": []
             }
           },
           "defaultConfiguration": "production"
@@ -79,6 +117,9 @@
             },
             "development": {
               "browserTarget": "frontend:build:development"
+            },
+            "local": {
+              "browserTarget": "frontend:build:local"
             }
           },
           "defaultConfiguration": "development"
@@ -88,27 +129,8 @@
           "options": {
             "browserTarget": "frontend:build"
           }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "tsconfig.spec.json",
-            "karmaConfig": "karma.conf.js",
-            "inlineStyleLanguage": "scss",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "src/styles.scss"
-            ],
-            "scripts": []
-          }
         }
       }
     }
-  },
-  "defaultProject": "frontend"
+  }
 }
