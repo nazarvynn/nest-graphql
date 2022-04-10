@@ -36,8 +36,10 @@ export class HomeComponent implements OnInit {
   }
 
   createUser(): void {
-    const userParams = this.createUserForm?.value;
-    this.userService.createUser(userParams).subscribe();
+    if (this.createUserForm.valid) {
+      const userParams = this.createUserForm?.value;
+      this.userService.createUser(userParams).subscribe();
+    }
   }
 
   showUpdateUser(user: User): void {
@@ -54,10 +56,12 @@ export class HomeComponent implements OnInit {
   }
 
   updateUser(): void {
-    const { id, ...userParams } = this.editUserForm?.value;
-    this.userService.updateUser(+id, userParams).subscribe(() => {
-      this.showEdit = false;
-    });
+    if (this.editUserForm.valid) {
+      const { id, ...userParams } = this.editUserForm?.value;
+      this.userService.updateUser(+id, userParams).subscribe(() => {
+        this.showEdit = false;
+      });
+    }
   }
 
   removeUser({ id }: User): void {
