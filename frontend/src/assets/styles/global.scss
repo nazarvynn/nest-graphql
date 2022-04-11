@@ -11,15 +11,15 @@ html {
   height: 100%;
 
   body {
-    @include text-default;
-    background: $white;
+    font-family: $font-family;
     height: 100%;
     -webkit-font-smoothing: antialiased;
+
+    padding: 40px;
   }
 }
 
 a {
-  color: $text;
   cursor: pointer;
 }
 
@@ -34,6 +34,5 @@ h3,
 h4,
 h5,
 h6 {
-  @include text-default;
   -webkit-font-smoothing: antialiased;
 }

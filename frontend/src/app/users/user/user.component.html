@@ -1,0 +1,12 @@
+<div class="user-wrapper">
+  <div class="header">
+    <button pButton label="back" [routerLink]="['/users']"></button>
+  </div>
+  <div *ngIf="user" class="content">
+    <p>User ID: {{user.id}}</p>
+    <p>User Name: {{user.name}}</p>
+    <p>User Email: {{user.email}}</p>
+    <p>Created at: {{user.createdAt | date: 'dd.MM.yyyy HH:mm'}}</p>
+    <p>Updated at: {{user.updatedAt | date: 'dd.MM.yyyy HH:mm'}}</p>
+  </div>
+</div>
