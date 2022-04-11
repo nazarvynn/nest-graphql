@@ -14,10 +14,10 @@ import { DialogModule } from 'primeng/dialog';
 import { GraphQLModule } from './graphql.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { UserComponent } from './user/user.component';
+import { UsersComponent } from './users/users.component';
 
 @NgModule({
-  declarations: [AppComponent, UserComponent],
+  declarations: [AppComponent, UsersComponent],
   imports: [
     AppRoutingModule,
     BrowserModule,
