@@ -6,25 +6,35 @@ const createUserSchema = Yup.object().shape({
   name: Yup.string().required("Required"),
   email: Yup.string().required("Required"),
 });
+const initialState = {
+  name: "",
+  email: "",
+};
 
 export default function CreateUserForm({ onSubmit }: { onSubmit: any }) {
   return (
     <Formik
-      initialValues={{
-        name: "",
-        email: "",
-      }}
+      initialValues={initialState}
       validationSchema={createUserSchema}
       onSubmit={onSubmit}
     >
-      {({ errors, touched }) => (
+      {() => (
         <Form>
-          <Field name="name" className="p-inputtext" placeholder="User name" />
+          <Field
+            name="name"
+            type="text"
+            placeholder="User name"
+            className="input input-bordered m-2"
+          />
           <Field
             name="email"
-            className="p-inputtext"
+            type="email"
             placeholder="User email"
+            className="input input-bordered m-2"
           />
+          <button type="submit" className="btn btn-secondary m-2">
+            Submit
+          </button>
         </Form>
       )}
     </Formik>
