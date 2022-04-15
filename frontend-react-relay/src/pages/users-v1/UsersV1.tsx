@@ -1,13 +1,13 @@
 import React from "react";
 
-import CreateUserForm from "./CreateUserForm";
-import UsersTable from "./UsersTable";
+import CreateUserFormV1 from "./CreateUserFormV1";
+import UsersTableV1 from "./UsersTableV1";
 import { useLazyLoadQuery } from "react-relay";
 import { graphql } from "babel-plugin-relay/macro";
-import { UsersQuery } from "./__generated__/UsersQuery.graphql";
+import { UsersV1Query } from "./__generated__/UsersV1Query.graphql";
 
 const usersQuery = graphql`
-  query UsersQuery {
+  query UsersV1Query {
     users {
       id
       name
@@ -18,8 +18,8 @@ const usersQuery = graphql`
   }
 `;
 
-export default function Users() {
-  const usersData = useLazyLoadQuery<UsersQuery>(usersQuery, {});
+export default function UsersV1() {
+  const usersData = useLazyLoadQuery<UsersV1Query>(usersQuery, {});
 
   const createUser = (createUser: any) => {
     console.log("createUser", createUser);
@@ -33,8 +33,8 @@ export default function Users() {
 
   return (
     <>
-      <CreateUserForm onSubmit={createUser} />
-      <UsersTable
+      <CreateUserFormV1 onSubmit={createUser} />
+      <UsersTableV1
         usersData={usersData}
         onEdit={editUser}
         onRemove={removeUser}

@@ -1,12 +1,12 @@
 import React from "react";
-import { UsersQuery$data } from "./__generated__/UsersQuery.graphql";
+import { UsersV1Query$data } from "./__generated__/UsersV1Query.graphql";
 
-export default function UsersTable({
+export default function UsersTableV1({
   usersData: { users },
   onEdit,
   onRemove,
 }: {
-  usersData: UsersQuery$data;
+  usersData: UsersV1Query$data;
   onEdit?: any;
   onRemove?: any;
 }) {

@@ -11,7 +11,7 @@ const initialState = {
   email: "",
 };
 
-export default function CreateUserForm({ onSubmit }: { onSubmit: any }) {
+export default function CreateUserFormV1({ onSubmit }: { onSubmit: any }) {
   return (
     <Formik
       initialValues={initialState}
